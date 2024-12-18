@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fasilitas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Container\Attributes\Storage;
 
 class FasilitasController extends Controller
 {
