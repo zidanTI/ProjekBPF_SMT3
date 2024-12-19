@@ -17,8 +17,9 @@ class FasilitasFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama_paket' => $this->faker->word,
-            'harga' => $this->faker->randomFloat(2, 100000, 5000000), // Harga antara 100.000 dan 5.000.000
+                'nama_paket' => $this->faker->word . ' Paket',
+                'harga' => $this->faker->randomFloat(2, 1000000, 20000000),
+                'deskripsi' => $this->faker->sentence,
         ];
     }
 }

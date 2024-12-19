@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id('id_customer'); // Pastikan ini adalah id_customer
+            $table->id('id_customer');
             $table->string('nama');
             $table->string('alamat');
             $table->string('no_hp');

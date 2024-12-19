@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fasilitas', function (Blueprint $table) {
-            $table->id('id_fasilitas'); // Pastikan ini adalah id_fasilitas
+            $table->id('id_fasilitas');
             $table->string('nama_paket');
             $table->decimal('harga', 10, 2);
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

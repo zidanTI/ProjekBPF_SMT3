@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sewas', function (Blueprint $table) {
+        Schema::create('sewa', function (Blueprint $table) {
             $table->id('id_booking');
-            $table->foreignId('id_customer')->constrained('customers', 'id_customer'); // Merujuk ke id_customer
-            $table->foreignId('id_fasilitas')->constrained('fasilitas', 'id_fasilitas'); // Merujuk ke id_fasilitas
+            $table->unsignedBigInteger('id_customer');
+            $table->unsignedBigInteger('id_fasilitas');
             $table->date('tanggal_acara');
             $table->string('bukti_pembayaran');
             $table->string('nama_acara');
             $table->timestamps();
+
+            // Foreign Key
+            $table->foreign('id_customer')->references('id_customer')->on('customers')->onDelete('cascade');
+            $table->foreign('id_fasilitas')->references('id_fasilitas')->on('fasilitas')->onDelete('cascade');
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sewas');
+        Schema::dropIfExists('sewa');
     }
 };

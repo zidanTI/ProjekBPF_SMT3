@@ -9,6 +9,8 @@ class Sewa extends Model
 {
     use HasFactory;
 
+    protected $table = 'sewa'; // Tentukan nama tabel secara eksplisit
+    protected $primaryKey = 'id_booking';
     protected $fillable = ['id_customer', 'id_fasilitas', 'tanggal_acara', 'bukti_pembayaran', 'nama_acara'];
 
     public function customer()

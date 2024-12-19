@@ -9,7 +9,8 @@ class Fasilitas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_paket', 'harga'];
+    protected $primaryKey = 'id_fasilitas';
+    protected $fillable = ['nama_paket', 'harga', 'deskripsi'];
 
     public function sewa()
     {

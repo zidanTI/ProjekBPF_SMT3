@@ -9,6 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_customer';
     protected $fillable = ['nama', 'alamat', 'no_hp'];
 
     public function sewa()

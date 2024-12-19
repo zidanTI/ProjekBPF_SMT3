@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FasilitasController;
 
 Route::get('/landing', function () {
@@ -25,4 +26,5 @@ Route::get('logout', function () {
     Auth::logout();
     return redirect('login');
 });
+Route::resource('customers', CustomerController::class);
 Route::resource('fasilitas', FasilitasController::class);

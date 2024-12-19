@@ -4,77 +4,84 @@ namespace App\Http\Controllers;
 
 use App\Models\Fasilitas;
 use Illuminate\Http\Request;
-use Illuminate\Container\Attributes\Storage;
 
 class FasilitasController extends Controller
 {
-    // Menampilkan daftar fasilitas
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $fasilitas = Fasilitas::all();
         return view('fasilitas.index', compact('fasilitas'));
     }
 
-    // Menampilkan form untuk menambah fasilitas
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         return view('fasilitas.create');
     }
 
-    // Menyimpan fasilitas baru
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'nama_paket' => 'required|string|max:255',
+            'nama_paket' => 'required',
             'harga' => 'required|numeric',
+            'deskripsi' => 'nullable|string',
         ]);
 
         Fasilitas::create($request->all());
-        return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil ditambahkan!');
+
+        return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil ditambahkan');
     }
 
-    // Menampilkan form untuk mengedit fasilitas
-    public function edit(Fasilitas $fasilitas)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $fasilitas = Fasilitas::findOrFail($id);
         return view('fasilitas.edit', compact('fasilitas'));
     }
 
-    // Mengupdate fasilitas
-    public function update(Request $request, string $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
-        $requestData = $request->validate([
-            'no_pasien' => 'required|unique:pasiens,no_pasien,' . $id, //dari inputan form, unique gak bisa sama
-            'nama' => 'required|min:3', //minimal 3 karakter
-            'umur' => 'required|numeric', //harus angka
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan', //harus antara kedua ini
-            'alamat' => 'nullable', //boleh kosong
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5000'
-            //mimes: ekstensi/jenis file //opsional foto di update apa gk
+        $request->validate([
+            'nama_paket' => 'required',
+            'harga' => 'required|numeric',
+            'deskripsi' => 'nullable|string',
         ]);
 
-        //koding ke database
-        $pasien = \App\Models\Fasilitas::findOrFail($id); //membuat objek kosong di variable model
-        $pasien->fill($requestData); //mengisi var model dengan data yang sudah ada
+        $fasilitas = Fasilitas::findOrFail($id);
+        $fasilitas->update($request->all());
 
-        if ($request->hasFile('foto')) {
-            Storage::delete($pasien->foto); //menghapus foto lama
-            $pasien->foto = $request->file('foto')->store('public'); //menyimpan foto baru
-        }
-
-        $pasien->save(); //menyimpan data ke database
-        flash('Data sudah diupdate')->success();
-        return redirect('/pasien');
-        //mengarahkan user ke url sebelumnya yaitu /pasien/create dengan membawa variable
+        return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil diperbarui');
     }
-
 
     /**
      * Remove the specified resource from storage.
      */
-    // Menghapus fasilitas
-    public function destroy(Fasilitas $fasilitas)
+    public function destroy(string $id)
     {
+        $fasilitas = Fasilitas::findOrFail($id);
         $fasilitas->delete();
-        return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil dihapus!');
+
+        return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil dihapus');
     }
 }

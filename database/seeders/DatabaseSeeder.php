@@ -21,10 +21,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@email.com',
             'password' => Hash::make('password123'), // Password hashed
         ]);
-        $this->call([
-            CustomerSeeder::class,
-            FasilitasSeeder::class,
-            SewaSeeder::class,
-        ]);
+        \App\Models\Customer::factory(10)->create();
+        \App\Models\Fasilitas::factory(10)->create();
+        \App\Models\Sewa::factory(10)->create();
     }
 }

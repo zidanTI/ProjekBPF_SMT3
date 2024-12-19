@@ -1,33 +1,23 @@
 @extends('dashboard')
 
 @section('content')
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Tambah Fasilitas</h1>
-
-        {{-- Form Tambah Fasilitas --}}
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form action="{{ route('fasilitas.store') }}" method="POST">
-                    @csrf
-
-                    {{-- Nama Paket --}}
-                    <div class="mb-3">
-                        <label for="nama_paket" class="form-label">Nama Paket:</label>
-                        <input type="text" id="nama_paket" name="nama_paket" class="form-control"
-                            placeholder="Masukkan nama paket" required>
-                    </div>
-
-                    {{-- Harga --}}
-                    <div class="mb-3">
-                        <label for="harga" class="form-label">Harga:</label>
-                        <input type="number" id="harga" name="harga" class="form-control" step="0.01"
-                            placeholder="Masukkan harga" required>
-                    </div>
-
-                    {{-- Tombol Simpan --}}
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
+    <div class="container">
+        <h2>Tambah Fasilitas</h2>
+        <form action="{{ route('fasilitas.store') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="nama_paket">Nama Paket</label>
+                <input type="text" class="form-control" id="nama_paket" name="nama_paket" required>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="number" class="form-control" id="harga" name="harga" required>
+            </div>
+            <div class="form-group">
+                <label for="deskripsi">Deskripsi</label>
+                <textarea class="form-control" id="deskripsi" name="deskripsi"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
     </div>
 @endsection

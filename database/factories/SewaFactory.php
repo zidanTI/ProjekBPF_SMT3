@@ -19,11 +19,11 @@ class SewaFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_customer' => Customer::factory(), // Menggunakan factory untuk id_customer
-            'id_fasilitas' => Fasilitas::factory(), // Menggunakan factory untuk id_fasilitas
-            'tanggal_acara' => $this->faker->date(),
-            'bukti_pembayaran' => $this->faker->imageUrl(),
-            'nama_acara' => $this->faker->sentence(),
+            'id_customer' => Customer::factory(),
+            'id_fasilitas' => Fasilitas::factory(),
+            'tanggal_acara' => $this->faker->date,
+            'bukti_pembayaran' => $this->faker->url,
+            'nama_acara' => $this->faker->sentence(3),
         ];
     }
 }
