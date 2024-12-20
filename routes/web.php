@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SewaController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FasilitasController;
 
@@ -28,3 +29,4 @@ Route::get('logout', function () {
 });
 Route::resource('customers', CustomerController::class);
 Route::resource('fasilitas', FasilitasController::class);
+Route::resource('sewa', SewaController::class);

@@ -18,11 +18,20 @@ return new class extends Migration
             $table->date('tanggal_acara');
             $table->string('bukti_pembayaran');
             $table->string('nama_acara');
+            $table->boolean('dp')->default(0); // Status DP: 0 - Belum DP, 1 - Sudah DP
             $table->timestamps();
-
-            // Foreign Key
-            $table->foreign('id_customer')->references('id_customer')->on('customers')->onDelete('cascade');
-            $table->foreign('id_fasilitas')->references('id_fasilitas')->on('fasilitas')->onDelete('cascade');
+        
+            // Foreign Key untuk customer dengan cascade delete dan update
+            $table->foreign('id_customer')
+                ->references('id_customer')->on('customers')
+                ->onDelete('cascade')  // Jika data customer dihapus, data sewa juga ikut terhapus
+                ->onUpdate('cascade'); // Jika data customer diupdate, data sewa juga ikut terupdate
+        
+            // Foreign Key untuk fasilitas dengan cascade delete dan update
+            $table->foreign('id_fasilitas')
+                ->references('id_fasilitas')->on('fasilitas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

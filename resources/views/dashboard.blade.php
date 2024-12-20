@@ -28,7 +28,7 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('landing') }}" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -216,19 +216,19 @@
                                 <li class="nav-item">
                                     <a href="{{ route('customers.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Fasilitas</p>
+                                        <p>Customer</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('fasilitas.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Customer</p>
+                                        <p>Fasilitas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
+                                    <a href="{{ route('sewa.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v3</p>
+                                        <p>Sewa</p>
                                     </a>
                                 </li>
                         </li>

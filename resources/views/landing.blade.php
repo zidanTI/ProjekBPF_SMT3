@@ -404,6 +404,12 @@
 
     <section id="billboard" class="bg-light py-5">
         <div class="container">
+            <div class="login-button-container d-flex justify-content-center">
+                <a href="{{ route('booking.create') }}" class="btn btn-login section-title text-center">Booking
+                    New</a>
+            </div>
+
+
             <div class="row justify-content-center">
                 <h1 class="section-title text-center mt-4" data-aos="fade-up">New Collections</h1>
                 <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">

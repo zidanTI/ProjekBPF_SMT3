@@ -39,7 +39,7 @@ class CustomerController extends Controller
 
         return redirect()->route('customers.index')->with('success', 'Customer berhasil ditambahkan.');
     }
-    
+
 
     /**
      * Display the specified resource.
