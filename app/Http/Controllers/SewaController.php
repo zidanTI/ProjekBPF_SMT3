@@ -2,23 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\kirimEmail;
+use Illuminate\Http\Request;
 use App\Models\Sewa;
 use App\Models\Customer;
 use App\Models\Fasilitas;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+
 
 class SewaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua data sewa
-        $sewas = Sewa::with(['customer', 'fasilitas'])->get();
+        $search = $request->input('search');
 
-        // Kirim data ke view
+        $sewas = Sewa::when($search, function ($query, $search) {
+            return $query->whereHas('customer', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', "%{$search}%");
+            });
+        })->with(['customer', 'fasilitas'])->paginate(10);
+
         return view('sewa.index', compact('sewas'));
+
+        // $sewas = Sewa::with('customer', 'fasilitas')->get();
+        // return view('sewa.index', compact('sewas'));
     }
 
     /**
@@ -26,11 +37,8 @@ class SewaController extends Controller
      */
     public function create()
     {
-        // Ambil semua customer dan fasilitas untuk dropdown di form
-        $customers = Customer::all();
         $fasilitas = Fasilitas::all();
-
-        return view('sewa.create', compact('customers', 'fasilitas'));
+        return view('sewa.create', compact('fasilitas'));
     }
 
     /**
@@ -38,108 +46,142 @@ class SewaController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data input
+        // Validasi input
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:15',
+            'nama' => 'required|string',
+            'no_hp' => 'required|string',
+            'alamat' => 'required|string',
             'id_fasilitas' => 'required|exists:fasilitas,id_fasilitas',
-            'nama_acara' => 'required|string|max:255',
             'tanggal_acara' => 'required|date',
-            'dp' => 'required|boolean', // 0 = Belum DP, 1 = Sudah DP
-            'bukti_pembayaran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:51200', // Validasi untuk bukti pembayaran
+            'nama_acara' => 'required|string',
         ]);
-        if ($request->hasFile('bukti_pembayaran')) {
-            $buktiPembayaranPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
-        }
-        // 1. Tambahkan customer jika belum ada
+
+        // Menyimpan data pelanggan
         $customer = Customer::create([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
+            'nama' => $validated['nama'],
+            'no_hp' => $validated['no_hp'],
+            'alamat' => $validated['alamat'],
         ]);
 
-        // 2. Tambahkan data sewa
+        // Menyimpan data sewa
         $sewa = Sewa::create([
-            'id_customer' => $customer->id_customer,  // ID Customer yang baru dibuat
-            'id_fasilitas' => $request->id_fasilitas,
-            'tanggal_acara' => $request->tanggal_acara,
-            'bukti_pembayaran' => $buktiPembayaranPath,   // Bisa dikosongkan atau diisi jika sudah ada pembayaran
-            'nama_acara' => $request->nama_acara,
-            'dp' => $request->dp, // Status DP
+            'id_customer' => $customer->id_customer,
+            'id_fasilitas' => $validated['id_fasilitas'],
+            'tanggal_acara' => $validated['tanggal_acara'],
+            'nama_acara' => $validated['nama_acara'],
+            'status_pembayaran' => 'Belum Dibayar',
         ]);
 
-        // Redirect atau tampilkan pesan sukses
-        return redirect()->route('sewa.index')->with('success', 'Sewa dan Customer berhasil ditambahkan.');
+        // Kirim email notifikasi ke admin
+        $adminEmail = "zidan23ti@mahasiswa.pcr.ac.id"; // Ganti dengan email admin
+        $details = [
+            'title' => 'Notifikasi Booking Baru',
+            'body' => "Halo Admin,\n\nTerdapat booking baru dengan detail sebagai berikut:\n" .
+                "Nama: {$customer->nama}\n" .
+                "No HP: {$customer->no_hp}\n" .
+                "Alamat: {$customer->alamat}\n" .
+                "Nama Acara: {$sewa->nama_acara}\n" .
+                "Tanggal Acara: {$sewa->tanggal_acara}\n" .
+                "Status Pembayaran: {$sewa->status_pembayaran}\n",
+        ];
+
+        Mail::raw($details['body'], function ($message) use ($adminEmail, $details) {
+            $message->to($adminEmail)
+                ->subject($details['title']);
+        });
+
+        return back()->with('success', 'Booking berhasil dibuat dan notifikasi email telah dikirim!');
     }
 
+    public function confirmPayment(Request $request, $id)
+    {
+        $sewa = Sewa::findOrFail($id);
+        $sewa->status_pembayaran = 'Sudah Dibayar';
+        $sewa->save();
+
+        return redirect()->route('sewa.index')->with('success', 'Pembayaran berhasil dikonfirmasi!');
+    }
+
+    public function sendWhatsAppNotification($id)
+    {
+        $sewa = Sewa::findOrFail($id);
+
+        // Nomor WhatsApp Admin
+        $customerNumber = $sewa->customer->no_hp;  // Ganti dengan nomor admin
+
+        // Menyusun pesan untuk WhatsApp
+        $message = urlencode("Halo Admin, terdapat pembayaran baru dari Customer.\n\n" .
+            "Nama: {$sewa->customer->nama}\n" .
+            "No HP: {$sewa->customer->no_hp}\n" .
+            "Alamat: {$sewa->customer->alamat}\n" .
+            "Nama Acara: {$sewa->nama_acara}\n" .
+            "Tanggal Acara: {$sewa->tanggal_acara}\n" .
+            "Fasilitas: {$sewa->fasilitas->nama_paket}\n" .
+            "Status Pembayaran: {$sewa->status_pembayaran}");
+
+        // URL WhatsApp Web untuk mengirim pesan otomatis
+        $url = "https://api.whatsapp.com/send?phone={$customerNumber}&text={$message}";
+
+        // Redirect ke URL WhatsApp untuk kirim pesan
+        return redirect($url);
+    }
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id_booking)
+    public function edit(string $id)
     {
-        $sewa = Sewa::findOrFail($id_booking);
-        $customers = Customer::all();
+        $sewa = Sewa::with('customer', 'fasilitas')->findOrFail($id);
         $fasilitas = Fasilitas::all();
-
-        return view('sewa.edit', compact('sewa', 'customers', 'fasilitas'));
+        return view('sewa.edit', compact('sewa', 'fasilitas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $id_booking)
+    public function update(Request $request, string $id)
     {
-        // Validasi inputan
-        $request->validate([
-            'id_customer' => 'required',
-            'id_fasilitas' => 'required',
+        $validated = $request->validate([
+            'nama' => 'required|string',
+            'no_hp' => 'required|string',
+            'alamat' => 'required|string',
+            'id_fasilitas' => 'required|exists:fasilitas,id_fasilitas',
             'tanggal_acara' => 'required|date',
-            'bukti_pembayaran' => 'required',
-            'nama_acara' => 'required',
-            'dp' => 'required|boolean', // Status DP
+            'nama_acara' => 'required|string',
         ]);
 
-        // Menghitung total harga berdasarkan fasilitas yang dipilih
-        $fasilitas = Fasilitas::find($request->id_fasilitas);
-        $total_harga = $fasilitas->harga;
+        $sewa = Sewa::findOrFail($id);
+        $customer = $sewa->customer;
 
-        // Update data sewa
-        $sewa = Sewa::findOrFail($id_booking);
+        // Update Customer
+        $customer->update([
+            'nama' => $validated['nama'],
+            'no_hp' => $validated['no_hp'],
+            'alamat' => $validated['alamat'],
+        ]);
+
+        // Update Sewa
         $sewa->update([
-            'id_customer' => $request->id_customer,
-            'id_fasilitas' => $request->id_fasilitas,
-            'tanggal_acara' => $request->tanggal_acara,
-            'bukti_pembayaran' => $request->bukti_pembayaran,
-            'nama_acara' => $request->nama_acara,
-            'total_harga' => $total_harga,
-            'dp' => $request->dp, // Menyimpan status DP
+            'id_fasilitas' => $validated['id_fasilitas'],
+            'tanggal_acara' => $validated['tanggal_acara'],
+            'nama_acara' => $validated['nama_acara'],
         ]);
 
-        return redirect()->route('sewa.index')->with('success', 'Data booking berhasil diupdate!');
+        return redirect()->route('sewa.index')->with('success', 'Booking berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_booking)
+    public function destroy(string $id)
     {
-        $customer = Customer::find($id_booking);
+        $sewa = Sewa::findOrFail($id);
+        $sewa->delete();
 
-        // Jika customer ditemukan, hapus
-        if ($customer) {
-            $customer->delete();  // Akan menghapus customer dan data terkait di tabel 'sewa' karena ada cascade delete
-        }
-
-        // Redirect atau tampilkan pesan sukses
-        return redirect()->route('customers.index')->with('success', 'Customer dan data terkait berhasil dihapus.');
+        return redirect()->route('sewa.index')->with('success', 'Booking berhasil dihapus!');
     }
 }

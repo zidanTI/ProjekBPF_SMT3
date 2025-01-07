@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Sewa extends Model
 {
     use HasFactory;
 
-    protected $table = 'sewa'; // Tentukan nama tabel secara eksplisit
+    protected $table = 'sewa';
     protected $primaryKey = 'id_booking';
-    protected $fillable = ['id_customer', 'id_fasilitas', 'tanggal_acara', 'bukti_pembayaran', 'nama_acara'];
+    protected $fillable = ['id_customer', 'id_fasilitas', 'tanggal_acara', 'nama_acara'];
 
     public function customer()
     {
@@ -22,4 +22,5 @@ class Sewa extends Model
     {
         return $this->belongsTo(Fasilitas::class, 'id_fasilitas');
     }
+
 }

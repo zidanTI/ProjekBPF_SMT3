@@ -21,8 +21,7 @@ class SewaFactory extends Factory
         return [
             'id_customer' => Customer::factory(),
             'id_fasilitas' => Fasilitas::factory(),
-            'tanggal_acara' => $this->faker->date,
-            'bukti_pembayaran' => $this->faker->url,
+            'tanggal_acara' => $this->faker->dateTimeBetween('+1 days', '+1 year'),
             'nama_acara' => $this->faker->sentence(3),
         ];
     }

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password123'), // Password hashed
         ]);
         \App\Models\Customer::factory(10)->create();
-        \App\Models\Fasilitas::factory(10)->create();
+        \App\Models\Fasilitas::factory(6)->create();
         \App\Models\Sewa::factory(10)->create();
     }
 }

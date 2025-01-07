@@ -9,10 +9,13 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ url('plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ url('dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+
     @yield('css')
 </head>
 
@@ -208,7 +211,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Dashboard
+                                    CUSTOMER
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -216,93 +219,45 @@
                                 <li class="nav-item">
                                     <a href="{{ route('customers.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Customer</p>
+                                        <p>DATA</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('fasilitas.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Fasilitas</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('sewa.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Sewa</p>
-                                    </a>
-                                </li>
+
                         </li>
-                        <li class="nav-item">
-                            <a href="../widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+
                     </ul>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>
-                                Forms
+                                FASILITAS
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../forms/general.html" class="nav-link">
+                                <a href="{{ route('fasilitas.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>General Elements</p>
+                                    <p>DATA</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="../forms/advanced.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Advanced Elements</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../forms/editors.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Editors</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../forms/validation.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Validation</p>
-                                </a>
-                            </li>
+
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                Tables
+                                SEWA
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../tables/simple.html" class="nav-link">
+                                <a href="{{ route('sewa.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Simple Tables</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../tables/data.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>DataTables</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../tables/jsgrid.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>jsGrid</p>
+                                    <p>DATA</p>
                                 </a>
                             </li>
                         </ul>

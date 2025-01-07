@@ -10,10 +10,22 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
+
+        $query = Customer::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('nama', 'like', '%' . $request->search . '%')
+                ->orWhere('alamat', 'like', '%' . $request->search . '%');
+        }
+
+        $customers = $query->paginate(10);
         return view('customers.index', compact('customers'));
+
+
+        // $customers = Customer::all();
+        // return view('customers.index', compact('customers'));
     }
 
     /**

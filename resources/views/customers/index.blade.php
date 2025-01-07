@@ -11,6 +11,16 @@
             </div>
         @endif
 
+        <!-- Form Pencarian -->
+        <form action="{{ route('customers.index') }}" method="GET" class="mt-3">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Cari nama atau alamat"
+                    value="{{ request('search') }}">
+                <button class="btn btn-secondary" type="submit">Cari</button>
+            </div>
+        </form>
+
+        <!-- Tabel Data -->
         <table class="table mt-3">
             <thead>
                 <tr>
@@ -22,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($customers as $customer)
+                @forelse ($customers as $customer)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $customer->nama }}</td>
@@ -41,8 +51,15 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Data tidak ditemukan.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
+
+        <!-- Pagination -->
+        {{ $customers->links() }}
     </div>
 @endsection

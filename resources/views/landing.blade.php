@@ -405,7 +405,7 @@
     <section id="billboard" class="bg-light py-5">
         <div class="container">
             <div class="login-button-container d-flex justify-content-center">
-                <a href="{{ route('booking.create') }}" class="btn btn-login section-title text-center">Booking
+                <a href="#" class="btn btn-login section-title text-center">Booking
                     New</a>
             </div>
 
