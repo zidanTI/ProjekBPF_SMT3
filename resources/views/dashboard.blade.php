@@ -208,66 +208,66 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('customers.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     CUSTOMER
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('customers.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>DATA</p>
                                     </a>
-                                </li>
+                                </li> --}}
 
                         </li>
 
-                    </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-edit"></i>
-                            <p>
-                                FASILITAS
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('fasilitas.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>DATA</p>
-                                </a>
-                            </li>
+                        {{-- </ul> --}}
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('fasilitas.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    FASILITAS
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            {{-- <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('fasilitas.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>DATA</p>
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
-                            <p>
-                                SEWA
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('sewa.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>DATA</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('logout') }}" class="nav-link">
-                            <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <span class="left badge badge-danger">Log out</span>
-                        </a>
-                    </li>
+                            </ul> --}}
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('sewa.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-table"></i>
+                                <p>
+                                    SEWA
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            {{-- <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('sewa.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>DATA</p>
+                                    </a>
+                                </li>
+                            </ul> --}}
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('logout') }}" class="nav-link">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <span class="left badge badge-danger">Log out</span>
+                            </a>
+                        </li>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

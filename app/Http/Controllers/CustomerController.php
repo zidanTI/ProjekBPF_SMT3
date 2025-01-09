@@ -20,7 +20,7 @@ class CustomerController extends Controller
                 ->orWhere('alamat', 'like', '%' . $request->search . '%');
         }
 
-        $customers = $query->paginate(10);
+        $customers = $query->paginate(10); // Pastikan ini mendapatkan data dari database
         return view('customers.index', compact('customers'));
 
 

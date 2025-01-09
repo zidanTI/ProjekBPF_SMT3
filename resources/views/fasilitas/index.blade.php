@@ -3,12 +3,24 @@
 @section('content')
     <div class="container">
         <h2>Daftar Fasilitas</h2>
+
+        <!-- Form Pencarian -->
+        <form action="{{ route('fasilitas.index') }}" method="GET" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Cari fasilitas..."
+                    value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </div>
+        </form>
+
         <a href="{{ route('fasilitas.create') }}" class="btn btn-primary mb-3">Tambah Fasilitas</a>
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
+
         <table class="table">
             <thead>
                 <tr>
@@ -20,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($fasilitas as $item)
+                @forelse ($fasilitas as $item)
                     <tr>
                         <td>{{ $item->id_fasilitas }}</td>
                         <td>{{ $item->nama_paket }}</td>
@@ -36,8 +48,13 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada fasilitas ditemukan</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 @endsection
+    

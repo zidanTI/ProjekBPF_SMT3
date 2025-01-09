@@ -10,9 +10,18 @@ class FasilitasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fasilitas = Fasilitas::all();
+        $query = Fasilitas::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('nama_paket', 'like', "%$search%")
+                ->orWhere('deskripsi', 'like', "%$search%");
+        }
+
+        $fasilitas = $query->get();
+
         return view('fasilitas.index', compact('fasilitas'));
     }
 

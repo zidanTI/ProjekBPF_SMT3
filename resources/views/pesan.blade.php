@@ -204,7 +204,6 @@
                             }
                         </style>
 
-
                         <!-- FullCalendar CSS -->
                         <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css"
                             rel="stylesheet">
@@ -231,7 +230,7 @@
                                 calendar.render();
                             });
                         </script>
-                        {{-- <main class="container" class="text-center">
+                        <main class="container" class="text-center">
                             <form action="{{ route('sewa.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
@@ -290,8 +289,8 @@
                                     <li>Jika ada pertanyaan, silakan hubungi kami melalui WhatsApp atau Email.</li>
                                     <li>No Owner : 0822246922152</li>
                                 </ul>
-                            </div> --}}
-                        {{-- </main> --}}
+                            </div>
+                        </main>
 
 
 
@@ -301,7 +300,14 @@
                                 <h2 class="content-title text-start">
                                     "Selamat datang di layanan fotografi kami, tempat di mana setiap momen istimewa Anda
                                     diperlakukan dengan penuh cinta dan perhatian. Kami memahami bahwa setiap orang
-                                    memiliki cerita unik, dan keinginan Anda adalah prioritas kami."
+                                    memiliki cerita unik, dan keinginan Anda adalah prioritas kami. Dengan tim
+                                    fotografer berpengalaman yang selalu menjaga kualitas layanan, kami berkomitmen
+                                    untuk memberikan pengalaman terbaik, mulai dari proses booking hingga hasil akhir
+                                    yang memuaskan. Tidak perlu khawatir, kami akan membantu Anda di setiap langkah,
+                                    memastikan semuanya berjalan lancar dan sesuai harapan. Kepuasan Anda adalah
+                                    kebahagiaan kami, dan kami ada di sini untuk menciptakan momen yang tak terlupakan,
+                                    dengan perhatian penuh terhadap detail. Terima kasih telah mempercayai kami—Anda
+                                    layak mendapatkan yang terbaik, dan kami siap mewujudkannya dengan sepenuh hati."
                                 </h2>
                             </div>
                         </div>
@@ -359,7 +365,7 @@
                     </div>
 
                     <div class="col-lg-4 ps-lg-5">
-                        <span class="content-subtitle">Why Us</span>
+                        {{-- <span class="content-subtitle">Why Us</span>
                         <h2 class="content-title">Far far away Behind the Word Mountains</h2>
                         <p class="lead">
                             Far far away, behind the word mountains, far from the countries
@@ -368,7 +374,7 @@
                         <p class="mb-5">
                             There live the blind texts. Separated they live in Bookmarksgrove
                             right at the coast of the Semantics, a large language ocean.
-                        </p> 
+                        </p> --}}
                         {{-- <div class="row mb-5 count-numbers">
 
                             <!-- Start Stats Item -->
@@ -398,7 +404,7 @@
                             </div>
                             <!-- End Stats Item -->
 
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>
@@ -791,11 +797,11 @@
                         <ul class="list-unstyled footer-blog-entry">
                             <li>
                                 <span class="d-block date">May 3, 2020</span>
-                                <a href="#">There live the Blind Texts</a>
+                                <a href="#">Website Pembokingan </a>
                             </li>
                             <li>
                                 <span class="d-block date">May 3, 2020</span>
-                                <a href="#">Separated they live in Bookmarksgrove right</a>
+                                <a href="#">Di kembang kan Oleh Owner Awak Visual</a>
                             </li>
                         </ul>
                     </div>

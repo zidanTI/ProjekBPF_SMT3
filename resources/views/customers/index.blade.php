@@ -60,6 +60,6 @@
         </table>
 
         <!-- Pagination -->
-        {{ $customers->links() }}
+        {{-- {{ $customers->links() }} --}}
     </div>
 @endsection

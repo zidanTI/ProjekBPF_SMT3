@@ -23,6 +23,11 @@ Route::get('/landingBaru', function () {
     $fasilitas = Fasilitas::all(); // Mengambil semua data fasilitas
     return view('landingBaru', compact('fasilitas')); // Mengirim data ke view landingBaru
 })->name('landingBaru');
+
+Route::get('/pesan', function () {
+    $fasilitas = Fasilitas::all(); // Mengambil semua data fasilitas
+    return view('pesan', compact('fasilitas')); // Mengirim data ke view landingBaru
+})->name('pesan');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // });
@@ -50,6 +55,7 @@ Route::get('/sewa/send-whatsapp/{id}', [SewaController::class, 'sendWhatsAppNoti
 
 
 Route::get('/landingFasilitas', [LandingPageController::class, 'landingFasilitas'])->name('landingFasilitas');
+
 
 Route::get('/api/sewa/events', function () {
     $sewa = Sewa::with('customer')->get();
